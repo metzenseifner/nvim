@@ -1,0 +1,77 @@
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+
+
+local cmp = require('cmp')
+local select_opts = {behavior = cmp.SelectBehavior.Select}
+cmp.setup {
+      performance = {
+        { debounce = 150},
+        { throttle = 50 },
+      },
+      completion = {
+        { keyword_length = 1 },
+        { autocomplete = false },
+        { completeopt = 'menu,menuone,noselect' },
+      },
+      mapping = {
+         ['<Tab>'] = function(fallback)
+           if cmp.visible() then
+             cmp.select_next_item()
+           else
+             fallback()
+           end
+         end,
+         ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
+         ['<Down>'] = cmp.mapping.select_next_item(select_opts),
+         ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
+         ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
+         --["<C-b>"] = cmp.mapping.scroll_docs(-4),
+         --["<C-n>"] = cmp.mapping.scroll_docs(4),
+         ["<C-e>"] = cmp.mapping.close(), --cmp.mapping.abort()
+         ["<C-c>"] = cmp.mapping.confirm {
+            --behavior = cmp.ConfirmBehavior.Insert,
+            select = true,
+         },
+         ["C-f"] = cmp.mapping.complete(),
+      },
+      --formatting = {
+      --   format = lspkind.cmp_format {
+      --      with_text = true,
+      --      menu = {
+      --
+      --         buffer   = "[buf]",
+      --         nvim_lsp = "[LSP]",
+      --         path     = "[path]",
+      --      },
+      --   },
+      --},
+      sources = {
+         { name = "nvim_lsp"},
+         { name = "path" },
+         { name = "buffer" , keyword_length = 5},
+      },
+      experimental = {
+         ghost_text = true
+      },
+      window = {
+        documentation = cmp.config.window.bordered()
+      },
+      formatting = {
+        fields = {'menu', 'abbr', 'kind'},
+        format = function(entry, item)
+          local menu_icon = {
+            nvim_lsp = 'λ',
+            luasnip = '⋗',
+            buffer = 'Ω',
+            path = '  ',
+          }
+          item.menu = menu_icon[entry.source.name]
+          return item
+          end,
+      },
+      --snippet = {
+      --  expand = function(args)
+      --    luasnip.lsp_expand(args.body)
+      --  end
+      --},
+}

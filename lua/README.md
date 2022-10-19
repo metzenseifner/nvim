@@ -1,0 +1,4 @@
+- https://www.notonlycode.org/neovim-lua-config/
+- https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
+- https://learnxinyminutes.com/docs/lua/
+- https://randomgeekery.org/config/init.lua/

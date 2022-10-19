@@ -1,0 +1,5 @@
+-- require('mini.starter').setup({})
+-- require('mini.sessions').setup({
+--   directory = vim.fn.stdpath("data") .. "/sessions"
+-- })
+-- require('mini.comment').setup()
